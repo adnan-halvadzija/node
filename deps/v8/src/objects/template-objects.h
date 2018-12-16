@@ -7,6 +7,7 @@
 
 #include "src/objects.h"
 #include "src/objects/hash-table.h"
+#include "src/objects/struct.h"
 
 // Has to be the last include (doesn't have include guards):
 #include "src/objects/object-macros.h"
@@ -20,8 +21,8 @@ namespace internal {
 // method.
 class TemplateObjectDescription final : public Tuple2 {
  public:
-  DECL_ACCESSORS(raw_strings, FixedArray)
-  DECL_ACCESSORS(cooked_strings, FixedArray)
+  DECL_ACCESSORS2(raw_strings, FixedArray)
+  DECL_ACCESSORS2(cooked_strings, FixedArray)
 
   static Handle<JSArray> CreateTemplateObject(
       Isolate* isolate, Handle<TemplateObjectDescription> description);

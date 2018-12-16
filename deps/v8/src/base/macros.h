@@ -109,7 +109,7 @@ V8_INLINE Dest bit_cast(Source const& source) {
 }
 
 // Explicitly declare the assignment operator as deleted.
-#define DISALLOW_ASSIGN(TypeName) TypeName& operator=(const TypeName&) = delete;
+#define DISALLOW_ASSIGN(TypeName) TypeName& operator=(const TypeName&) = delete
 
 // Explicitly declare the copy constructor and assignment operator as deleted.
 #define DISALLOW_COPY_AND_ASSIGN(TypeName) \
@@ -385,7 +385,7 @@ constexpr inline T RoundUp(T x) {
 }
 
 template <typename T, typename U>
-inline bool IsAligned(T value, U alignment) {
+constexpr inline bool IsAligned(T value, U alignment) {
   return (value & (alignment - 1)) == 0;
 }
 

@@ -5,7 +5,7 @@
 #ifndef V8_OBJECTS_STACK_FRAME_INFO_H_
 #define V8_OBJECTS_STACK_FRAME_INFO_H_
 
-#include "src/objects.h"
+#include "src/objects/struct.h"
 
 // Has to be the last include (doesn't have include guards):
 #include "src/objects/object-macros.h"
@@ -33,17 +33,21 @@ class StackFrameInfo : public Struct, public NeverReadOnlySpaceObject {
   DECL_PRINTER(StackFrameInfo)
   DECL_VERIFIER(StackFrameInfo)
 
-  static const int kLineNumberIndex = Struct::kHeaderSize;
-  static const int kColumnNumberIndex = kLineNumberIndex + kPointerSize;
-  static const int kScriptIdIndex = kColumnNumberIndex + kPointerSize;
-  static const int kScriptNameIndex = kScriptIdIndex + kPointerSize;
-  static const int kScriptNameOrSourceUrlIndex =
-      kScriptNameIndex + kPointerSize;
-  static const int kFunctionNameIndex =
-      kScriptNameOrSourceUrlIndex + kPointerSize;
-  static const int kFlagIndex = kFunctionNameIndex + kPointerSize;
-  static const int kIdIndex = kFlagIndex + kPointerSize;
-  static const int kSize = kIdIndex + kPointerSize;
+  // Layout description.
+#define STACK_FRAME_INFO_FIELDS(V)            \
+  V(kLineNumberIndex, kTaggedSize)            \
+  V(kColumnNumberIndex, kTaggedSize)          \
+  V(kScriptIdIndex, kTaggedSize)              \
+  V(kScriptNameIndex, kTaggedSize)            \
+  V(kScriptNameOrSourceUrlIndex, kTaggedSize) \
+  V(kFunctionNameIndex, kTaggedSize)          \
+  V(kFlagIndex, kTaggedSize)                  \
+  V(kIdIndex, kTaggedSize)                    \
+  /* Total size. */                           \
+  V(kSize, 0)
+
+  DEFINE_FIELD_OFFSET_CONSTANTS(Struct::kHeaderSize, STACK_FRAME_INFO_FIELDS)
+#undef STACK_FRAME_INFO_FIELDS
 
  private:
   // Bit position in the flag, from least significant bit position.
